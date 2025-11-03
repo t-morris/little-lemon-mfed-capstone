@@ -1,4 +1,8 @@
 import FootLogo from '../assets/littlelemon_logo_portrait.png';
+import Insta from '../assets/insta.svg';
+import Faceb from '../assets/faceb.svg';
+import Tiktk from '../assets/tiktk.svg';
+import Twitt from '../assets/twitt.svg';
 
 export default function Footer() {
     return (
@@ -28,10 +32,10 @@ export default function Footer() {
                 <div class="social">
                     <ul>
                         <li class="footer-cat">Socials</li>
-                        <li><a href="">Instagram</a></li>
-                        <li><a href="">Facebook</a></li>
-                        <li><a href="">TikTok</a></li>
-                        <li><a href="">Twitter</a></li>
+                        <li><a href=""><img src={Insta} alt="Instagram" />Instagram</a></li>
+                        <li><a href=""><img src={Faceb} alt="Facebook" />Facebook</a></li>
+                        <li><a href=""><img src={Tiktk} alt="TikTok" />TikTok</a></li>
+                        <li><a href=""><img src={Twitt} alt="Twitter" />Twitter</a></li>
                     </ul>
                 </div>
             </div>

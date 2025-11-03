@@ -1,4 +1,5 @@
 /* Header */
+
 .App-logo {
   height: 56px;
   pointer-events: none;
@@ -6,6 +7,9 @@
 
 header {
   height: 120px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,24 +20,23 @@ header img {
 }
 
 header nav {
-  display: inline;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  z-index: 1000;
+  width: 100%;
 }
 
 header nav ul {
-  display: inline;
-  list-style-type: none;
-  padding: 0;
-  padding-left: 86px;
-  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  transition: all 0.3s ease;
 }
 
 header nav li {
-  display: inline;
-  padding-right: 30px;
   text-transform: uppercase;
+}
+
+header nav div.menu {
+  z-index: 500;
 }
 
 header nav a {
@@ -43,9 +46,91 @@ header nav a {
   font-weight: bold;
 }
 
+.menu-toggle {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  text-align: right;
+  margin: 10px;
+}
+
 header nav a:hover, header nav a:active {
   text-decoration: none;
   color: black;
+}
+
+.nav-burger {
+  background-image: url("./assets/menu.svg");
+  height: 36px;
+  width: 36px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  transition: background-image 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-burger.open {
+  background-image: url("./assets/close.svg");
+  transform: rotate(90deg);
+}
+
+@media (max-width: 1050px) {
+  .menu-toggle {
+    display: block;
+    margin: 10px;
+    height: auto;
+    width: 36px;
+    margin-left: auto;
+  }
+
+  header nav div.menu {
+    position: fixed;
+    inset: 60px 0 0 0;
+    background: #495E57;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(+200%);
+    opacity: 0;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    z-index: 500;
+  }
+
+  header nav ul {
+    position: fixed;
+    inset: 0;
+    margin: 0;
+    padding: 0;
+    background: #495E57;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    width: auto;
+  }
+
+  header nav ul li a {
+    color:#F4CE14;
+  }
+
+  header nav div.menu.open {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  header nav div.open {
+    display: flex;
+    padding: 0;
+    margin: 0;
+  }
+
+  header {
+    height: 60px;
+  }
+
+  .App-logo {
+    height: 35px;
+    margin: 10px;
+  }
 }
 
 /* Footer */
@@ -97,6 +182,21 @@ footer li {
   text-transform: capitalize;
 }
 
+footer .social ul {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+footer .social li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 footer a {
   text-decoration: none;
   color: black;
@@ -104,12 +204,63 @@ footer a {
   font-weight: bold;
 }
 
-footer a:hover, footer a:active {
+footer .social a {
+  display: flex;
+  align-items: center;
+  color: inherit; /* inherits footer text color */
   text-decoration: none;
-  color: black;
+  font-size: 24px;
+  font-weight: bold;
 }
 
-footer .footer-cat {
+footer a:hover, footer a:active {
+  text-decoration: none;
+  color:#F4CE14;
+}
+
+footer .social a img {
+  display: none;
+  margin: 0;
+  width: 25px;
+  height: 25px;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+@media (max-width: 1050px) {
+  footer .social ul {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  footer .social li {
+    display: inline-flex;
+  }
+
+  footer .social .footer-cat {
+    display: none;
+  }
+
+  footer .social a {
+    font-size: 0;
+  }
+
+  footer .social a img {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+  }
+
+  footer .social a img {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.footer-cat {
   padding: 2.5px;
   color: #495E57;
   font-size: 24px;
@@ -130,4 +281,514 @@ footer .footer-cat {
 .mailto {
   text-decoration: none;
   text-transform: lowercase;
+}
+
+@media (max-width: 1050px) {
+  footer a, footer li, .footer-cat {
+    font-size: 16px;
+  }
+
+  footer {
+    flex-direction: column;
+    height: auto;
+    margin: 0;
+    padding: 20px;
+  }
+
+  .footer-text {
+    flex-direction: column;
+  }
+
+  .Foot-logo {
+    height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+  }
+
+  .footer img {
+    margin: 0px;
+  }
+
+  footer .social, footer .contact, footer nav {
+    margin: 0px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+  }
+}
+
+/* Text */
+
+h1 {
+  font-family: "Markazi Text", serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
+  font-size: 64px;
+  color: #F4CE14;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+h2 {
+  font-family: "Markazi Text", serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 48px;
+  color: black;
+  margin-top: 0px;
+  margin-bottom: 30px;
+}
+
+h3 {
+  font-family: "Markazi Text", serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 40px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+body {
+  font-family: "Karla", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@media (max-width: 1050px) {
+  h1 {
+    font-size: 60px;
+  }
+
+  h2 {
+    font-size: 35px;
+    margin-bottom: 5px;
+  }
+}
+
+/* MainAbout */
+
+.about {
+  background-color: white;
+  background-image:
+  linear-gradient(
+      to right,
+      white 25%,          /* solid white on the left */
+      transparent 60%,   /* fade-in starts */
+      transparent 70%,   /* fade-out ends */
+      white 100%         /* solid white on the right */
+    ),
+    url("./assets/mario-and-adrian-a.png");
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  background-position: right;
+  height: 500px;
+  min-height: 500px;
+  max-height: 500px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.text {
+  width: auto;
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 1;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.spacing {
+  width: auto;
+  grid-column: 2 / span 2;
+  grid-row: 1 / span 1;
+}
+
+@media (max-width: 1050px) {
+  .about {
+    height: auto;
+    min-height: auto;
+    max-height: auto;
+    padding: 20px;
+    padding-top: 70px;
+    background-image:
+    linear-gradient(
+        to bottom,
+        transparent 0%,
+        transparent 10%,
+        white 40%
+      ),
+      url("./assets/mario-and-adrian-a.png");
+      background-size: 100% auto;
+      background-position: top;
+      text-align: justify;
+  }
+
+  h1 {
+    text-shadow:2px 2px #000000;
+  }
+
+  .spacing {
+    width: auto;
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+  }
+}
+
+/* Reusable Grid */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+@media (max-width: 1050px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+/* Testimonials */
+
+.testimonials-bg {
+  background-color: rgba(251,218,187,0.3);
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.testimonials {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 1050px) {
+  .testimonials-bg {
+    padding: 20px;
+  }
+}
+
+.ts-card {
+  background-color: rgba(73,94,87,0.2);
+  border-radius: 10px;
+  padding: 10px 10px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 350px;
+}
+
+@media (max-width: 1050px) {
+  .ts-card {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.ts-card-body, .ts-card-title {
+  padding: 8px 0px 8px 0px;
+}
+
+.ts-card-body div, .ts-card-title div {
+  padding: 0px 10px 0px 10px;
+}
+
+.ts-card-img {
+  height: 85px;
+  width: 85px;
+  border-radius: 10px;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 10px;
+}
+
+.ts-testtxt {
+  font-size: 16px;
+  color: rgba(73,94,87,1);
+  text-align: center;
+  padding: 0;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.ts-card-title {
+  font-size: 24px;
+  font-family: "Markazi Text", serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ts-card-body {
+  text-align: center;
+  display: flex;
+}
+
+.star {
+  height: 18px;
+  width: auto;
+  margin: 0px;
+  display: inline;
+}
+
+/* Specials */
+
+.specials-bg {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.specials-head {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max-width: 1050px) {
+  .specials-head {
+    flex-direction: column;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+  }
+}
+
+button {
+  background-color: #F4CE14;
+  color: black;
+  font-size: 20px;
+  font-weight: bolder;
+  font-style: normal;
+  border: none;
+  border-radius: 20px;
+  padding: 13px 40px 13px 40px;
+  margin-bottom: auto;
+  transition-duration: 500ms;
+  width: fit-content;
+}
+
+button:hover {
+  background-color: #ffe047;
+  transition-duration: 300ms;
+  box-shadow: 2px 2px black;
+  transform: translate(-2px, -2px);
+}
+
+button:active {
+  background-color: #dab810;
+  transition-duration: 100ms;
+}
+
+@media (max-width: 1050px) {
+  button {
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+  }
+}
+
+.specials-card {
+  background-color: rgba(73,94,87,0.2);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+  margin: 0px;
+  max-width: 350px;
+}
+
+@media (max-width: 1050px) {
+  .specials-card {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.specials-card-content {
+  padding: 10px 16px 16px 16px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.specials-card-img {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  height: 180px;
+  min-height: 180px;
+  max-height: 180px;
+  width: auto;
+}
+
+.specials-card-body {
+  padding: 16px 0px 20px 0px;
+  font-size: 16px;
+  color: rgba(73,94,87,1);
+  text-align: left;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.specials-card-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.specials-card-title .item {
+  font-family: "Markazi Text", serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
+  font-size: 24px;
+  color: #000000;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.specials-card-title .price {
+  font-family: "Karla", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
+  font-size: 18px;
+  color: #EE9972;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.specials-card-footer {
+  font-family: "Karla", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
+  font-size: 16px;
+  color: black;
+  text-align: left;
+  display: flex;
+}
+
+.specials-card-footer p{
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.specials-card-footer img{
+  height: 20px;
+  width: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 5px;
+}
+
+/* Hero */
+
+.hero-bg {
+  background-image:
+  linear-gradient(
+      to bottom,
+      rgba(73,94,87,1) 0%,
+      rgba(73,94,87,1) 90%,
+      white 90%,
+      white 100%
+    );
+}
+
+.hero-content {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 80px;
+}
+
+.hero-text {
+  color: white;
+  height: 420px;
+  margin-right: 95px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hero-text p {
+  font-size: 24px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.hero-text button {
+  margin-bottom: 20px;
+}
+
+.hero-img {
+  border-radius: 20px;
+  height: 580px;
+  background-image: url("./assets/restaurantfood.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-width: 500px;
+  grid-column: 2 / span 2;
+  grid-row: 1 / span 1;
+}
+
+@media (max-width: 1050px) {
+  .hero-content h1 {
+    text-shadow: none;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .hero-content h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .hero-content {
+    padding: 20px;
+    flex-direction: column;
+  }
+
+  .hero-text {
+    height: auto;
+    margin: 0px;
+  }
+
+  .hero-img {
+    max-width: 100%;
+    min-width: auto;
+    height: 400px;
+  }
+
+  .hero-text p {
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 }
