@@ -1,4 +1,4 @@
-import WideLogo from '../assets/restaurantfood.jpg';
+import { Link } from "react-router-dom";
 
 export default function Hero() {
     return (
@@ -8,7 +8,7 @@ export default function Hero() {
                     <h1>Little Lemon</h1>
                     <h3>Chicago</h3>
                     <p>We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.</p>
-                    <button>Reserve a Table</button>
+                    <Link to="/bookings"><button>Reserve a Table</button></Link>
                 </div>
                 <div class="hero-img"></div>
             </div>

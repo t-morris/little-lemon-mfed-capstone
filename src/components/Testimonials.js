@@ -1,62 +1,37 @@
-import test1 from '../assets/b64f988f077b50ffdab0afee9de4d701e4a9d5da.jpg';
-import test2 from '../assets/44dd2beb0c06094368ffbb7fa1843005cfdae174.jpg';
-import test3 from '../assets/3ca412176fe4306326b04a78b51fa148c49f99c1.jpg';
 import star from '../assets/8fab66317d6c35dc211a165dbc3735e15466ae68.png';
+import { useState, useEffect } from "react";
+import { testimonials } from "./testimonialsData";
 
 export default function Testimonials() {
-    return (
-        <div class="testimonials-bg">
-            <h2>Testimonials</h2>
-            <div class="testimonials grid">
-                <div class="ts-card">
-                    <div class="ts-card-title">
-                        <div class="name">Jon Dowe</div>
-                        <div>
-                            <img class="star" alt="" src={star} />
-                            <img class="star" alt="" src={star} />
-                            <img class="star" alt="" src={star} />
-                            <img class="star" alt="" src={star} />
-                            <img class="star" alt="" src={star} />
-                        </div>
-                    </div>
-                    <div class="ts-card-body">
-                        <img class="ts-card-img" alt="" src={test1} />
-                        <div class="ts-testtxt">"Tempor incididunt ut labore et dolore magna aliqua."</div>
-                    </div>
-                </div>
-                <div class="ts-card">
-                    <div class="ts-card-title">
-                        <div class="name">Jane Doe</div>
-                        <div>
-                            <img class="star" alt="" src={star} />
-                            <img class="star" alt="" src={star} />
-                            <img class="star" alt="" src={star} />
-                            <img class="star" alt="" src={star} />
-                            <img class="star" alt="" src={star} />
-                        </div>
-                    </div>
-                    <div class="ts-card-body">
-                        <img class="ts-card-img" alt="" src={test2} />
-                        <div class="ts-testtxt">"In voluptate  velit esse cillum dolore eu fugiat nulla pariatur."</div>
-                    </div>
-                </div>
-                <div class="ts-card">
-                    <div class="ts-card-title">
-                        <div class="name">John Doaw</div>
-                        <div>
-                            <img class="star" alt="" src={star} />
-                            <img class="star" alt="" src={star} />
-                            <img class="star" alt="" src={star} />
-                            <img class="star" alt="" src={star} />
-                            <img class="star" alt="" src={star} />
-                        </div>
-                    </div>
-                    <div class="ts-card-body">
-                        <img class="ts-card-img" alt="" src={test3} />
-                        <div class="ts-testtxt">"Duis aute irure dolor in dolore eu fugiat nulla pariatur."</div>
-                    </div>
-                </div>
+  const [selected, setSelected] = useState([]);
+
+  useEffect(() => {
+    // Shuffle and take 3
+    const shuffled = [...testimonials].sort(() => 0.5 - Math.random());
+    setSelected(shuffled.slice(0, 3));
+  }, []); // Run only once when the component mounts
+
+  return (
+    <div className="testimonials-bg">
+      <h2>Testimonials</h2>
+      <div className="testimonials grid">
+        {selected.map((t, i) => (
+          <div className="ts-card" key={i}>
+            <div className="ts-card-title">
+              <div className="name">{t.name}</div>
+              <div>
+                {[...Array(t.stars)].map((_, i) => (
+                  <img key={i} className="star" alt="" src={star} />
+                ))}
+              </div>
             </div>
-        </div>
-    )
+            <div className="ts-card-body">
+              <img className="ts-card-img" alt={t.name} src={t.image} />
+              <div className="ts-testtxt">“{t.text}”</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
