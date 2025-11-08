@@ -207,7 +207,7 @@ footer a {
 footer .social a {
   display: flex;
   align-items: center;
-  color: inherit; /* inherits footer text color */
+  color: inherit;
   text-decoration: none;
   font-size: 24px;
   font-weight: bold;
@@ -379,10 +379,10 @@ body {
   background-image:
   linear-gradient(
       to right,
-      white 25%,          /* solid white on the left */
-      transparent 60%,   /* fade-in starts */
-      transparent 70%,   /* fade-out ends */
-      white 100%         /* solid white on the right */
+      white 25%,
+      transparent 60%,
+      transparent 70%,
+      white 100%
     ),
     url("./assets/mario-and-adrian-a.png");
   background-size: auto 100%;
@@ -452,10 +452,10 @@ body {
   background-image:
   linear-gradient(
       to right,
-      white 25%,          /* solid white on the left */
-      transparent 60%,   /* fade-in starts */
-      transparent 70%,   /* fade-out ends */
-      white 100%         /* solid white on the right */
+      white 25%,
+      transparent 60%,
+      transparent 70%,
+      white 100%
     ),
     url("./assets/mario-and-adrian-a.png");
   background-size: auto 100%;
@@ -566,7 +566,7 @@ body {
 
 .ts-card {
   background-color: rgba(73,94,87,0.2);
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 10px 10px 10px 10px;
   display: flex;
   flex-direction: column;
@@ -592,7 +592,7 @@ body {
 .ts-card-img {
   height: 85px;
   width: 85px;
-  border-radius: 10px;
+  border-radius: 12px;
   margin-top: auto;
   margin-bottom: auto;
   margin-left: 10px;
@@ -679,6 +679,7 @@ body {
 .specials-head {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 30px;
 }
 
 @media (max-width: 1050px) {
@@ -726,13 +727,13 @@ button:active {
 
 .specials-card {
   background-color: rgba(73,94,87,0.2);
-  border-radius: 10px;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   padding: 0px;
   margin: 0px;
   max-width: 350px;
-  min-width: 350px;
+
 }
 
 @media (max-width: 1050px) {
@@ -945,11 +946,223 @@ button:active {
   font-style: normal;
   font-weight: bold;
   text-decoration: none;
-  
 }
 
 @media (max-width: 1050px) {
   .notfound {
     padding: 20px;
   }
+}
+
+
+/* Bookings */
+
+.option-card {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.option-card input[type="radio"] {
+  display: none;
+}
+
+.option-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(73,94,87,0.2);
+  border: 4px solid transparent;
+  transition: 100ms;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  border-radius: 16px;
+  font-weight: bold;
+}
+
+.option-card span {
+  padding: 0.6rem 1.2rem;
+}
+
+.option-card.small {
+  padding: 0;
+}
+
+.option-card input[type="radio"]:checked + .option-content {
+  border-color: rgba(73,94,87,1);
+}
+
+/* Green check overlay */
+.option-card input[type="radio"]:checked + .option-content::after {
+  content: "✓";
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  background: rgba(73,94,87,1);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.reservation-form {
+  max-width: 800px;
+  margin: 2rem auto;
+  font-family: "Inter", sans-serif;
+  color: #2e3b31;
+}
+
+.reservation-form h4 {
+  text-align: center;
+}
+
+@media (max-width: 1050px) {
+  .reservation-form {
+    padding: 0 20px 0 20px;
+  }
+}
+
+.dining-options {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  justify-content:center;
+}
+
+@media (max-width: 1050px) {
+  .dining-options {
+    flex-direction: column;
+  }
+}
+
+
+.dining-options label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.dining-options input[type="radio"] {
+  display: none;
+}
+
+.dining-options input[type="radio"]:checked + img {
+  border: 4px solid rgba(73,94,87,1);
+  border-radius: 12px;
+}
+
+.dining-img {
+  width: 250px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 0px solid transparent;
+  transition: 100ms;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 1050px) {
+  .dining-img {
+    width: 200px;
+  }
+}
+
+.selectors {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  justify-content:center;
+}
+
+.selectors select,
+.selectors input[type="date"] {
+  flex: 1;
+  padding: 0.6rem;
+  border-radius: 12px;
+  border: 1px solid #a3b2a7;
+  background: #eef1ef;
+  color: rgba(73,94,87,1);
+  max-width: 35%;
+}
+
+.book-as {
+  display: flex;
+  gap: 1rem;
+  margin: 0.5rem 0 1.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.book-as label {
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.book-as input[type="radio"] {
+  display: none;
+}
+
+.book-as input[type="radio"]:checked + span,
+.book-as input[type="radio"]:checked + label {
+  border: 2px solid #2e3b31;
+}
+
+.input-group {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.input-group input {
+  padding: 0.6rem 1rem;
+  border-radius: 12px;
+  border: 1px solid #a3b2a7;
+  background: #eef1ef;
+}
+
+.payment {
+  display: flex;
+  gap: 1rem;
+}
+
+.input-group.small {
+  width: 30%;
+}
+
+.error {
+  color: #c0392b;
+  font-size: 0.8rem;
+  margin-top: 0.2rem;
+}
+
+.minornote {
+  font-size: 12px;
+  padding: 0px;
+  margin: 0px;
+}
+
+.required {
+  color: red;
+}
+
+form .buttons {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
