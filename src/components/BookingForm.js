@@ -9,7 +9,7 @@ export default function BookingForm({ form, onSubmit, availableTimes, dispatchAv
         <>
             <div className="reservation-form">
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <h4>Dining Experience:</h4>
+                    <h4 id="diningExpHeading">Dining Experience:</h4>
                     <div className="dining-options">
                         <label className="option-card">
                             <input
@@ -39,7 +39,8 @@ export default function BookingForm({ form, onSubmit, availableTimes, dispatchAv
 
                     <h4>Booking Details:</h4>
                     <div className="selectors">
-                        <select {...register("people")}>
+                        <label htmlFor="Guests">Guests<span className="required">*</span></label>
+                        <select id="Guests" {...register("people")}>
                             <option value="1">1 Person</option>
                             <option value="2">2 People</option>
                             <option value="3">3 People</option>
@@ -52,7 +53,8 @@ export default function BookingForm({ form, onSubmit, availableTimes, dispatchAv
                             <option value="10">10 People</option>
                         </select>
 
-                        <input
+                        <label htmlFor="Date">Date<span className="required">*</span></label>
+                        <input id="Date"
                             type="date"
                             {...register("date", {
                             onChange: (e) => {
@@ -62,16 +64,17 @@ export default function BookingForm({ form, onSubmit, availableTimes, dispatchAv
                             })}
                         />
 
-                        <select {...register("time")}>
+                        <label htmlFor="Time">Time<span className="required">*</span></label>
+                        <select id="Time" data-testid="availableTimes" {...register("time")}>
                             {availableTimes.map((t) => (
-                                <option key={t} value={t}>{t}</option>
+                                <option data-testid="availableTimes-option" key={t} value={t}>{t}</option>
                             ))}
                         </select>
                     </div>
                     <p className="error">{errors.people?.message}</p>
                     <p className="error">{errors.date?.message}</p>
                     <p className="error">{errors.time?.message}</p>
-                    <p class="minornote">Note: For parties larger than 10 please call our friendly staff to discuss a reservation.</p>
+                    <p className="minornote">Note: For parties larger than 10 please call our friendly staff to discuss a reservation.</p>
                     <h4>Occasion:</h4>
                     <div className="selectors">
                         <select {...register("occasion")}>
@@ -96,38 +99,38 @@ export default function BookingForm({ form, onSubmit, availableTimes, dispatchAv
                 </div>
 
                     <div className="input-group">
-                    <label>First Name<span className="required">*</span></label>
-                    <input type="text" {...register("firstName")} />
+                    <label htmlFor="First Name">First Name<span className="required">*</span></label>
+                    <input id="First Name" type="text" {...register("firstName")} />
                     <p className="error">{errors.firstName?.message}</p>
                     </div>
 
                     <div className="input-group">
-                    <label>Last Name<span className="required">*</span></label>
-                    <input type="text" {...register("lastName")} />
+                    <label htmlFor="Last Name">Last Name<span className="required">*</span></label>
+                    <input id="Last Name" type="text" {...register("lastName")} />
                     <p className="error">{errors.lastName?.message}</p>
                     </div>
 
                     <div className="input-group">
-                    <label>E-Mail<span className="required">*</span></label>
-                    <input type="email" {...register("email")} />
+                    <label htmlFor="Email">E-Mail<span className="required">*</span></label>
+                    <input id="Email" type="email" {...register("email")} />
                     <p className="error">{errors.email?.message}</p>
                     </div>
 
                     <div className="input-group">
-                    <label>Phone<span className="required">*</span></label>
-                    <input type="tel" {...register("phone")} />
+                    <label htmlFor="Phone">Phone<span className="required">*</span></label>
+                    <input id="Phone" type="tel" {...register("phone")} />
                     <p className="error">{errors.phone?.message}</p>
                     </div>
 
                     <div className="payment">
                     <div className="input-group">
-                        <label>Card #<span className="required">*</span></label>
-                        <input type="text" placeholder="1234-5678-9123-4567" {...register("card")} />
+                        <label htmlFor="Card Number">Card Number<span className="required">*</span></label>
+                        <input id="Card Number" type="text" placeholder="1234-5678-9123-4567" {...register("card")} />
                         <p className="error">{errors.card?.message}</p>
                     </div>
                     <div className="input-group small">
-                        <label>CVC<span className="required">*</span></label>
-                        <input type="text" placeholder="123" {...register("cvc")} />
+                        <label htmlFor="CVC">CVC<span className="required">*</span></label>
+                        <input id="CVC" type="text" placeholder="123" {...register("cvc")} />
                         <p className="error">{errors.cvc?.message}</p>
                     </div>
                     </div>
