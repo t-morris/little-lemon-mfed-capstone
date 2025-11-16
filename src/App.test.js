@@ -1,180 +1,478 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import BookingForm from './components/BookingForm';
-import About from './components/About.js';
-import { initializeTimes, updateTimes } from './components/Utils.js';
+import { render, screen, fireEvent } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import BookingForm from "./components/BookingForm";
+import { initializeTimes, updateTimes } from "./components/Utils";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const testSchema = yup.object({
+  dining: yup.string().required("Location of dining experience is required"),
+  people: yup.string().required("Party size is required"),
+  date: yup.string().required("Date of booking is required"),
+  time: yup.string().required("Time of booking is required"),
+  occasion: yup.string(),
+  bookingType: yup.string().required(),
+  firstName: yup.string().required("First name is required"),
+  lastName: yup.string().required("Last name is required"),
+  email: yup.string().email("Invalid email").required("E-mail is required"),
+  phone: yup
+    .string()
+    .trim()
+    .required("Phone is required")
+    .matches(/^[0-9]{10,}$/, "Invalid phone number"),
+  card: yup
+    .string()
+    .trim()
+    .required("Card number is required")
+    .matches(/^[0-9\- ]{16,19}$/, "Invalid card number"),
+  cvc: yup
+    .string()
+    .trim()
+    .required("CVC is required")
+    .matches(/^[0-9]{3,4}$/, "Invalid CVC"),
+});
+
+function FormWrapper({ children }) {
+  const form = useForm({
+    resolver: yupResolver(testSchema),
+    mode: "onSubmit",
+    reValidateMode: "onChange",
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      card: "",
+      cvc: "",
+      people: "2",
+      dining: "",
+      time: "",
+      bookingType: "",
+      date: "",
+    },
+  });
+
+  return children(form);
+}
 
 const mockForm = {
   register: jest.fn(),
-  handleSubmit: (fn) => (e) => e.preventDefault(),
-  formState: { errors: {} },
+  handleSubmit: fn => e => {
+    e.preventDefault();
+    fn({});
+  },
   watch: jest.fn(),
   setValue: jest.fn(),
+  formState: { errors: {} }
 };
 
-const mockTimes = [
-  "05:00 PM",
-  "05:30 PM",
-  "06:00 PM",
-  "06:30 PM",
-];
 
-test("initializeTimes returns expected default times", () => {
-  const times = initializeTimes();
-  expect(Array.isArray(times)).toBe(true);
-  expect(times.length).toBe(11);
-  expect(times[0]).toBe("05:00 PM");
-  expect(times[times.length - 1]).toBe("10:00 PM");
+
+// Mock API functions
+
+const seededRandom = (seed) => {
+  const m = 2 ** 35 - 31;
+  const a = 185852;
+  let s = seed % m;
+  return () => (s = (s * a) % m) / m;
+};
+
+const fetchAPI = (date) => {
+  let result = [];
+  let random = seededRandom(date.getDate());
+  for (let i = 17; i <= 23; i++) {
+    if (random() < 0.5) result.push(i + ":00");
+    if (random() < 0.5) result.push(i + ":30");
+  }
+  // Ensure at least one time is returned to avoid empty array in tests
+  if (result.length === 0) result.push("17:00");
+  return result;
+};
+
+const submitAPI = jest.fn((data) => true);
+
+
+// Utils tests
+
+describe("Utils functions with mocked API", () => {
+  test("initializeTimes returns a non-empty array", async () => {
+  // Attach mocked fetchAPI to window so Utils.js can find it
+    window.fetchAPI = fetchAPI;
+    const times = await initializeTimes();
+    expect(Array.isArray(times)).toBe(true);
+    expect(times.length).toBeGreaterThan(0);
+  });
+
+  test("updateTimes returns a new array when action with date is dispatched", () => {
+    const initialState = ["17:00", "17:30"];
+    // Simulate a real dispatch: includes date + new times
+    const action = {
+      type: "updateTimes",
+      payload: ["18:00", "18:30"],
+      date: "2025-11-08"
+    };
+    const newState = updateTimes(initialState, action);
+    expect(newState).not.toBe(initialState);
+    expect(newState).toEqual(["18:00", "18:30"]);
+  });
 });
 
-test("updateTimes returns the same list when action is dateChanged", () => {
-  const initialState = initializeTimes();
-  const action = { type: "dateChanged", payload: "2025-11-08" };
-  const newState = updateTimes(initialState, action);
-  expect(Array.isArray(newState)).toBe(true);
-  expect(newState).toEqual(initialState); // identical for now
-});
 
-test("updateTimes returns current state for unknown action", () => {
-  const initialState = initializeTimes();
-  const action = { type: "unknownAction" };
-  const newState = updateTimes(initialState, action);
-  expect(newState).toBe(initialState); // original data returned
-});
 
-// test("updateTimes changes times when dateChanged action is dispatched", () => {
-//   const initialState = initializeTimes();
-//   const action = { type: "dateChanged", payload: "2025-12-25" };
-//   const newState = updateTimes(initialState, action);
 
-//   // Example placeholder expectation
-//   expect(newState).not.toBe(initialState);
-//   expect(newState.length).toBeGreaterThan(0);
-// });
+// Attribute Tests
 
-// test('Simulates user updating the date which triggers updateTimes', () => {
-//   const { getByTestId, getAllByTestId } = render(<BookingForm form={mockForm} onSubmit={jest.fn()} availableTimes={mockTimes} dispatchAvailableTimes={jest.fn()} />);
-//   //The value should be the key of the option
-//   fireEvent.change(getByTestId('availableTimes'), { target: { value: "06:00 PM" } })
-//   let options = getAllByTestId('availableTimes-option')
-//   expect(options).toHaveLength(4);
-//   expect(options[0].selected).toBeFalsy();
-// });
-
-test('Simulates time selection using mockTimes as availableTimes', () => {
-  const { getByTestId, getAllByTestId } = render(<BookingForm form={mockForm} onSubmit={jest.fn()} availableTimes={mockTimes} dispatchAvailableTimes={jest.fn()} />);
-  //The value should be the key of the option
-  fireEvent.change(getByTestId('availableTimes'), { target: { value: "06:00 PM" } })
-  let options = getAllByTestId('availableTimes-option')
-  expect(options).toHaveLength(4);
-  expect(options[0].selected).toBeFalsy();
-  expect(options[1].selected).toBeFalsy();
-  expect(options[2].selected).toBeTruthy();
-  expect(options[3].selected).toBeFalsy();
-});
-
-test('Renders the Little Lemon header for About page.', () => {
-    render(<About />);
-    const lltitle = screen.getByText("Little Lemon");
-    expect(lltitle).toBeInTheDocument();
-});
-
-test("Renders the Dining Experience heading", () => {
+test("Dining option radios have correct attributes", () => {
   render(
     <BookingForm
       form={mockForm}
-      onSubmit={jest.fn()}
-      availableTimes={mockTimes}
+      availableTimes={["17:00"]}
+      submitForm={jest.fn()}
       dispatchAvailableTimes={jest.fn()}
+      handleDateChange={jest.fn()}
     />
   );
-  const diningExpHeading = screen.getByText("Dining Experience:");
-  expect(diningExpHeading).toBeInTheDocument();
+  const indoor = screen.getByLabelText(/indoor/i);
+  const alfresco = screen.getByLabelText(/alfresco/i);
+  expect(indoor).toHaveAttribute("type", "radio");
+  expect(indoor).toHaveAttribute("value", "Indoor");
+  expect(alfresco).toHaveAttribute("type", "radio");
+  expect(alfresco).toHaveAttribute("value", "Alfresco");
 });
 
-describe("BookingForm submission flow", () => {
-  const mockOnSubmit = jest.fn();
-  const mockDispatch = jest.fn();
+test("Guests select has correct HTML attributes", () => {
+  render(
+    <BookingForm
+      form={mockForm}
+      availableTimes={["17:00"]}
+      submitForm={jest.fn()}
+      dispatchAvailableTimes={jest.fn()}
+      handleDateChange={jest.fn()}
+    />
+  );
+  const select = screen.getByLabelText(/guests/i);
+  expect(select.tagName.toLowerCase()).toBe("select");
+  expect(select).toHaveAttribute("id", "Guests");
+});
 
-  // react-hook-form mock with working handleSubmit
-  const mockForm = {
-    register: jest.fn(),
-    handleSubmit: (fn) => (e) => {
-      e.preventDefault();
-      fn({
-        dining: "Indoor",
-        people: "2",
-        date: "2025-11-08",
-        time: "06:00 PM",
-        occasion: "Birthday",
-        bookingType: "Guest",
-        firstName: "John",
-        lastName: "Doe",
-        email: "john@example.com",
-        phone: "0412345678",
-        card: "1234-5678-9123-4567",
-        cvc: "123",
-      });
-    },
-    formState: { errors: {} },
-    watch: jest.fn(),
-    setValue: jest.fn(),
-  };
+test("Time select is a dropdown with available times", () => {
+  render(
+    <BookingForm
+      form={mockForm}
+      availableTimes={["17:00", "18:00"]}
+      submitForm={jest.fn()}
+      dispatchAvailableTimes={jest.fn()}
+      handleDateChange={jest.fn()}
+    />
+  );
+  const select = screen.getByLabelText(/time/i);
+  expect(select.tagName.toLowerCase()).toBe("select");
+  const options = screen.getAllByTestId("availableTimes-option");
+  expect(options).toHaveLength(2);
+});
 
-  test("submits the form with populated fields", async () => {
-    render(
-      <BookingForm
-        form={mockForm}
-        onSubmit={mockOnSubmit}
-        availableTimes={mockTimes}
-        dispatchAvailableTimes={mockDispatch}
-      />
-    );
+test("First Name input has proper HTML attributes", () => {
+  render(
+    <BookingForm
+      form={mockForm}
+      availableTimes={["17:00"]}
+      submitForm={jest.fn()}
+      dispatchAvailableTimes={jest.fn()}
+      handleDateChange={jest.fn()}
+    />
+  );
+  const input = screen.getByLabelText(/first name/i);
+  expect(input).toHaveAttribute("type", "text");
+  expect(input).toHaveAttribute("id", "First Name");
+});
 
-    // Simulate user input for key fields
-    const firstNameInput = screen.getByLabelText(/First Name/i);
-    const lastNameInput = screen.getByLabelText(/Last Name/i);
-    const emailInput = screen.getByLabelText(/E-Mail/i);
-    const phoneInput = screen.getByLabelText(/Phone/i);
-    const cardInput = screen.getByLabelText(/Card Number/i);
-    const cvcInput = screen.getByLabelText(/CVC/i);
-    const dateInput = screen.getByLabelText(/date/i, { selector: "input" });
+test("Last Name input has proper HTML attributes", () => {
+  render(
+    <BookingForm
+      form={mockForm}
+      availableTimes={["17:00"]}
+      submitForm={jest.fn()}
+      dispatchAvailableTimes={jest.fn()}
+      handleDateChange={jest.fn()}
+    />
+  );
+  const input = screen.getByLabelText(/last name/i);
+  expect(input).toHaveAttribute("type", "text");
+  expect(input).toHaveAttribute("id", "Last Name");
+});
 
-    // Use userEvent for realistic input (async)
-    await userEvent.type(firstNameInput, "John");
-    await userEvent.type(lastNameInput, "Doe");
-    await userEvent.type(emailInput, "john@example.com");
-    await userEvent.type(phoneInput, "0412345678");
-    await userEvent.type(cardInput, "1234-5678-9123-4567");
-    await userEvent.type(cvcInput, "123");
+test("Email input has correct HTML attributes", () => {
+  render(
+    <BookingForm
+      form={mockForm}
+      availableTimes={["17:00"]}
+      submitForm={jest.fn()}
+      dispatchAvailableTimes={jest.fn()}
+      handleDateChange={jest.fn()}
+    />
+  );
+  const input = screen.getByLabelText(/e-mail/i);
+  expect(input).toHaveAttribute("type", "email");
+  expect(input).toHaveAttribute("id", "Email");
+});
 
-    // Select dropdowns
-    const peopleSelect = screen.getByDisplayValue("1 Person") || screen.getByRole("combobox", { name: /people/i });
-    await userEvent.selectOptions(peopleSelect, "2");
+test("Phone input has correct HTML attributes", () => {
+  render(
+    <BookingForm
+      form={mockForm}
+      availableTimes={["17:00"]}
+      submitForm={jest.fn()}
+      dispatchAvailableTimes={jest.fn()}
+      handleDateChange={jest.fn()}
+    />
+  );
+  const input = screen.getByLabelText(/phone/i);
+  expect(input).toHaveAttribute("type", "tel");
+  expect(input).toHaveAttribute("id", "Phone");
+});
 
-    const timeSelect = screen.getByTestId("availableTimes");
-    await userEvent.selectOptions(timeSelect, "06:00 PM");
 
-    // Select radio options
-    const guestRadio = screen.getByDisplayValue("Guest");
-    await userEvent.click(guestRadio);
+test("Date input is a date selector", () => {
+  render(
+    <BookingForm
+      form={mockForm}
+      availableTimes={["17:00"]}
+      submitForm={jest.fn()}
+      dispatchAvailableTimes={jest.fn()}
+      handleDateChange={jest.fn()}
+    />
+  );
+  const input = screen.getByLabelText(/date/i);
+  expect(input).toHaveAttribute("type", "date");
+});
 
-    // Submit form
-    const submitButton = screen.getByRole("button", { name: /Make Reservation/i });
-    await userEvent.click(submitButton);
+test("Card number input has correct HTML attributes", () => {
+  render(
+    <BookingForm
+      form={mockForm}
+      availableTimes={["17:00"]}
+      submitForm={jest.fn()}
+      dispatchAvailableTimes={jest.fn()}
+      handleDateChange={jest.fn()}
+    />
+  );
+  const card = screen.getByLabelText(/card number/i);
+  expect(card).toHaveAttribute("type", "text");
+  expect(card).toHaveAttribute("id", "Card Number");
+});
 
-    // Verify submission handler was called
-    expect(mockOnSubmit).toHaveBeenCalledTimes(1);
-    expect(mockOnSubmit).toHaveBeenCalledWith(
-      expect.objectContaining({
-        firstName: "John",
-        lastName: "Doe",
-        email: "john@example.com",
-        phone: "0412345678",
-        card: "1234-5678-9123-4567",
-        cvc: "123",
-        time: "06:00 PM",
-      })
-    );
-  });
+test("CVC input has correct HTML attributes", () => {
+  render(
+    <BookingForm
+      form={mockForm}
+      availableTimes={["17:00"]}
+      submitForm={jest.fn()}
+      dispatchAvailableTimes={jest.fn()}
+      handleDateChange={jest.fn()}
+    />
+  );
+  const cvc = screen.getByLabelText(/cvc/i);
+  expect(cvc).toHaveAttribute("type", "text");
+  expect(cvc).toHaveAttribute("id", "CVC");
+});
+
+// Error Validation Tests
+
+test("Shows error when dining option is not selected", async () => {
+  render(
+    <FormWrapper>
+      {form => (
+        <BookingForm
+          form={form}
+          availableTimes={["17:00"]}
+          submitForm={jest.fn()}
+          dispatchAvailableTimes={jest.fn()}
+          handleDateChange={jest.fn()}
+        />
+      )}
+    </FormWrapper>
+  );
+  fireEvent.click(screen.getByRole("button", { name: /make reservation/i }));
+  expect(await screen.findByText(/dining/i)).toBeInTheDocument();
+});
+
+// Date, Time, Booking Type can't be left empty by user by design, defaults to current day and first available time.
+
+test("Shows error when first name empty", async () => {
+  render(
+    <FormWrapper>
+      {form => (
+        <BookingForm
+          form={form}
+          availableTimes={["17:00"]}
+          submitForm={jest.fn()}
+          dispatchAvailableTimes={jest.fn()}
+          handleDateChange={jest.fn()}
+        />
+      )}
+    </FormWrapper>
+  );
+  fireEvent.click(screen.getByRole("button", { name: /make reservation/i }));
+  expect(await screen.findByText("First name is required")).toBeInTheDocument();
+});
+
+test("Shows error when last name empty", async () => {
+  render(
+    <FormWrapper>
+      {form => (
+        <BookingForm
+          form={form}
+          availableTimes={["17:00"]}
+          submitForm={jest.fn()}
+          dispatchAvailableTimes={jest.fn()}
+          handleDateChange={jest.fn()}
+        />
+      )}
+    </FormWrapper>
+  );
+  fireEvent.click(screen.getByRole("button", { name: /make reservation/i }));
+  expect(await screen.findByText("Last name is required")).toBeInTheDocument();
+});
+
+test("Shows error when phone is empty", async () => {
+  render(
+    <FormWrapper>
+      {form => (
+        <BookingForm
+          form={form}
+          availableTimes={["17:00"]}
+          submitForm={jest.fn()}
+          dispatchAvailableTimes={jest.fn()}
+          handleDateChange={jest.fn()}
+        />
+      )}
+    </FormWrapper>
+  );
+  fireEvent.click(screen.getByRole("button", { name: /make reservation/i }));
+  expect(await screen.findByText("Phone is required")).toBeInTheDocument();
+});
+
+test("Yup validation rejects invalid phone number", async () => {
+  render(
+    <FormWrapper>
+      {(form) => (
+        <BookingForm
+          form={form}
+          availableTimes={["17:00"]}
+          submitForm={jest.fn()}
+          dispatchAvailableTimes={jest.fn()}
+          handleDateChange={jest.fn()}
+        />
+      )}
+    </FormWrapper>
+  );
+  await userEvent.type(screen.getByLabelText(/phone/i), "123");
+  fireEvent.click(screen.getByRole("button", { name: /make reservation/i }));
+  expect(await screen.findByText("Invalid phone number")).toBeInTheDocument();
+});
+
+test("Shows error for empty email", async () => {
+  render(
+    <FormWrapper>
+      {form => (
+        <BookingForm
+          form={form}
+          availableTimes={["17:00"]}
+          submitForm={jest.fn()}
+          dispatchAvailableTimes={jest.fn()}
+          handleDateChange={jest.fn()}
+        />
+      )}
+    </FormWrapper>
+  );
+  fireEvent.click(screen.getByRole("button", { name: /make reservation/i }));
+  expect(await screen.findByText("E-mail is required")).toBeInTheDocument();
+});
+
+test("Shows error for invalid email", async () => {
+  render(
+    <FormWrapper>
+      {form => (
+        <BookingForm
+          form={form}
+          availableTimes={["17:00"]}
+          submitForm={jest.fn()}
+          dispatchAvailableTimes={jest.fn()}
+          handleDateChange={jest.fn()}
+        />
+      )}
+    </FormWrapper>
+  );
+  await userEvent.type(screen.getByLabelText(/e-mail/i), "not-an-email");
+  fireEvent.click(screen.getByRole("button", { name: /make reservation/i }));
+  expect(await screen.findByText("Invalid email")).toBeInTheDocument();
+});
+
+test("Shows error when card number empty", async () => {
+  render(
+    <FormWrapper>
+      {form => (
+        <BookingForm
+          form={form}
+          availableTimes={["17:00"]}
+          submitForm={jest.fn()}
+          dispatchAvailableTimes={jest.fn()}
+          handleDateChange={jest.fn()}
+        />
+      )}
+    </FormWrapper>
+  );
+  fireEvent.click(screen.getByRole("button", { name: /make reservation/i }));
+  expect(await screen.findByText("Card number is required")).toBeInTheDocument();
+});
+
+test("Shows error when CVC empty", async () => {
+  render(
+    <FormWrapper>
+      {form => (
+        <BookingForm
+          form={form}
+          availableTimes={["17:00"]}
+          submitForm={jest.fn()}
+          dispatchAvailableTimes={jest.fn()}
+          handleDateChange={jest.fn()}
+        />
+      )}
+    </FormWrapper>
+  );
+  fireEvent.click(screen.getByRole("button", { name: /make reservation/i }));
+  expect(await screen.findByText("CVC is required")).toBeInTheDocument();
+});
+
+// FInal submission test
+
+test("Valid form submits successfully", async () => {
+  const submitMock = jest.fn();
+  render(
+    <FormWrapper>
+      {form => (
+        <BookingForm
+          form={form}
+          availableTimes={["17:00"]}
+          submitForm={submitMock}
+          dispatchAvailableTimes={jest.fn()}
+          handleDateChange={jest.fn()}
+        />
+      )}
+    </FormWrapper>
+  );
+  await userEvent.click(screen.getByRole("radio", { name: /indoor/i }));
+  await userEvent.selectOptions(screen.getByRole("combobox", { name: /guests/i }), "2");
+  await userEvent.type(screen.getByLabelText(/date/i), "2025-12-25");
+  await userEvent.selectOptions(screen.getByRole("combobox", { name: /time/i }), "17:00");
+  await userEvent.click(screen.getByRole("radio", { name: /guest/i }));
+  await userEvent.type(screen.getByLabelText(/first name/i), "John");
+  await userEvent.type(screen.getByLabelText(/last name/i), "Doe");
+  await userEvent.type(screen.getByLabelText(/e-mail/i), "john@example.com");
+  await userEvent.type(screen.getByLabelText(/phone/i), "0412345678");
+  await userEvent.type(screen.getByLabelText(/card number/i), "4111 1111 1111 1111");
+  await userEvent.type(screen.getByLabelText(/cvc/i), "123");
+  await userEvent.click(screen.getByRole("button", { name: /make reservation/i }));
+  expect(submitMock).toHaveBeenCalledTimes(1);
 });

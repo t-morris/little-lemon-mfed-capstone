@@ -1166,3 +1166,31 @@ form .buttons {
   margin-left: auto;
   margin-right: auto;
 }
+
+.confirmation {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.confirmation-table {
+  width: auto;
+  margin: 3rem auto 3rem auto;
+  border-collapse: collapse;
+  background-color: rgba(73,94,87,0.3);
+  border-radius: 20px;
+}
+
+.confirmation-table th,
+.confirmation-table td {
+  padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+  text-align:center;
+}
+
+.confirmation-table th {
+  font-weight: 600;
+}
+
+.confirmation p {
+  text-align: center;
+}

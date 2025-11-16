@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 
 export default function Specials() {
     return (
-        <div class="specials-bg">
-            <div class="specials-head">
+        <div className="specials-bg">
+            <div className="specials-head">
                 <h2>This week's specials!</h2>
                 <Link to="/menu"><button>Online Menu</button></Link>
             </div>
-            <div class="grid">
+            <div className="grid">
                 {menu.specials.map((item) => (
                 <div className="specials-card" key={item.id}>
                     <img className="specials-card-img" alt={item.name} src={item.image} />

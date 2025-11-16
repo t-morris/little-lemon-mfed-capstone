@@ -8,11 +8,11 @@ import Twitt from '../assets/twitt.svg';
 export default function Footer() {
     return (
         <footer>
-            <img src={FootLogo} alt="Logo" class="Foot-logo"/>
-            <div class="footer-text">
+            <img src={FootLogo} alt="Logo" className="Foot-logo"/>
+            <div className="footer-text">
                 <nav>
                     <ul>
-                        <li class="footer-cat">Site</li>
+                        <li className="footer-cat">Site</li>
                         <li><Link to="/">Home</Link></li>
                         <li><Link to="/ourstory">About</Link></li>
                         <li><Link to="/menu">Menu</Link></li>
@@ -21,18 +21,18 @@ export default function Footer() {
                         <li><Link to="/login">Login</Link></li>
                     </ul>
                 </nav>
-                <div class="contact">
+                <div className="contact">
                     <ul>
-                        <li class="footer-cat">Contact Us</li>
+                        <li className="footer-cat">Contact Us</li>
                         <li>2395 Maldove Way</li>
                         <li>Chicago, Illinois</li>
                         <li>60601</li>
                         <li>(555)-555-5555</li>
-                        <li><a class="mailto" href="mailto:">info@littlelemon.com</a></li>
+                        <li><a className="mailto" href="mailto:">info@littlelemon.com</a></li>
                     </ul></div>
-                <div class="social">
+                <div className="social">
                     <ul>
-                        <li class="footer-cat">Socials</li>
+                        <li className="footer-cat">Socials</li>
                         <li><a href="www.instagram.com"><img src={Insta} alt="Instagram" />Instagram</a></li>
                         <li><a href="www.facebook.com"><img src={Faceb} alt="Facebook" />Facebook</a></li>
                         <li><a href="www.tiktok.com"><img src={Tiktk} alt="TikTok" />TikTok</a></li>

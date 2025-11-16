@@ -1,14 +1,13 @@
 import IndoorImg from '../assets/indoor.jpg';
 import AlfrescoImg from '../assets/alfresco.jpg';
 
-export default function BookingForm({ form, onSubmit, availableTimes, dispatchAvailableTimes }) {
-    const { register, handleSubmit, formState: { errors }, watch, setValue } = form;
-    const selectedDate = watch("date");
+export default function BookingForm({ form, submitForm, availableTimes, dispatchAvailableTimes, handleDateChange }) {
+    const { register, handleSubmit, formState: { errors } } = form;
 
     return (
         <>
             <div className="reservation-form">
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form onSubmit={handleSubmit(submitForm)}>
                     <h4 id="diningExpHeading">Dining Experience:</h4>
                     <div className="dining-options">
                         <label className="option-card">
@@ -58,8 +57,7 @@ export default function BookingForm({ form, onSubmit, availableTimes, dispatchAv
                             type="date"
                             {...register("date", {
                             onChange: (e) => {
-                                const dateValue = e.target.value;
-                                dispatchAvailableTimes({ type: "dateChanged", payload: dateValue });
+                                handleDateChange(e.target.value);
                             }
                             })}
                         />
@@ -77,7 +75,7 @@ export default function BookingForm({ form, onSubmit, availableTimes, dispatchAv
                     <p className="minornote">Note: For parties larger than 10 please call our friendly staff to discuss a reservation.</p>
                     <h4>Occasion:</h4>
                     <div className="selectors">
-                        <select {...register("occasion")}>
+                        <select id="occasion" {...register("occasion")}>
                             <option value="None">None</option>
                             <option value="Birthday">Birthday</option>
                             <option value="Anniversary">Anniversary</option>

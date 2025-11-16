@@ -1,18 +1,18 @@
 export default function OurStory() {
     return (
         <>
-            <div class="about-intro grid">
-                <div class="text">
+            <div className="about-intro grid">
+                <div className="text">
                     <h1>Little Lemon</h1>
                     <h3>Chicago</h3>
                     <p>Welcome to Little Lemon, a vibrant Mediterranean oasis nestled in the heart of Chicago. Our story is one of passion, family, and the rich flavors of the Mediterranean region; all brought together by step-brothers Adrian and Mario. Here, we invite you to enjoy not just a meal, but an experience that transports you to sun-drenched coasts, olive groves, and bustling Mediterranean markets.</p>
                 </div>
-                <div class="spacing">
+                <div className="spacing">
 
                 </div>
             </div>
-            <div class="about-ourstory">
-                <div class="text">
+            <div className="about-ourstory">
+                <div className="text">
                     <h3>Our Story</h3>
                     <p>The journey of Little Lemon is one that blends cultures, experiences, and a shared love of good food. Adrian and Mario, despite their different backgrounds, were united by one thing: their deep-rooted connection to food. Raised in households where cooking was a celebration of life, their early memories are steeped in the smells of slow-cooked meats, fresh vegetables, tangy olive oil, and the warmth of homemade bread. As step-brothers, Adrian and Mario may have grown up in different cities, but their love of Mediterranean cuisine was a bond that connected them from the start. Their shared experiences of family gatherings, Mediterranean-inspired dinners, and spontaneous cooking lessons were the foundation for what would later become Little Lemon.</p>
                     <p>After years of honing their culinary skills and exploring Mediterranean food culture, they finally decided to combine their passions and open a restaurant where they could bring these authentic, bold flavors to Chicago. Named after the little lemon tree in Adrian’s grandmother’s garden — a symbol of growth, life, and family — Little Lemon is a tribute to everything that food means to them. It’s about the moments we share with those we love, the memories we create over a meal, and the excitement that comes from exploring new tastes and dishes.</p>

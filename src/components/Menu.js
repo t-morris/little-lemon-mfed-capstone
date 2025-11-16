@@ -4,8 +4,8 @@ import DirectionsBikeIcon from '../assets/directions_bike.svg';
 export default function Menu() {
   return (
     <section className="foodmenu">
-        <h1 class="page-heading">Menu</h1>
-        <div class="foodmenu-bg">
+        <h1 className="page-heading">Menu</h1>
+        <div className="foodmenu-bg">
             <h3>This Week’s Specials</h3>
             <div className="foodmenu-grid grid">
                 {menu.specials.map((item) => (

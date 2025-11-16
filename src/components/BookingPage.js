@@ -1,16 +1,15 @@
 import BookingForm from "./BookingForm";
 
-
-
-export default function BookingPage({ form, handleBookingSubmit, availableTimes, dispatchAvailableTimes }) {
+export default function BookingPage({ form, submitForm, availableTimes, dispatchAvailableTimes, handleDateChange }) {
     return (
         <section className="">
-            <h1 class="page-heading">Reserve a Table</h1>
+            <h1 className="page-heading">Reserve a Table</h1>
             <BookingForm
                 form={form}
-                handleBookingSubmit={handleBookingSubmit}
+                submitForm={submitForm}
                 availableTimes={availableTimes}
                 dispatchAvailableTimes={dispatchAvailableTimes}
+                handleDateChange={handleDateChange}
             />
         </section>
     )
