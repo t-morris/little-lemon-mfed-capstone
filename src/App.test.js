@@ -106,7 +106,6 @@ describe("Utils functions with mocked API", () => {
 
   test("updateTimes returns a new array when action with date is dispatched", () => {
     const initialState = ["17:00", "17:30"];
-    // Simulate a real dispatch: includes date + new times
     const action = {
       type: "updateTimes",
       payload: ["18:00", "18:30"],
@@ -133,8 +132,8 @@ test("Dining option radios have correct attributes", () => {
       handleDateChange={jest.fn()}
     />
   );
-  const indoor = screen.getByLabelText(/indoor/i);
-  const alfresco = screen.getByLabelText(/alfresco/i);
+  const indoor = screen.getByRole("radio", { name: /indoor/i });
+  const alfresco = screen.getByRole("radio", { name: /alfresco/i });
   expect(indoor).toHaveAttribute("type", "radio");
   expect(indoor).toHaveAttribute("value", "Indoor");
   expect(alfresco).toHaveAttribute("type", "radio");
@@ -184,7 +183,7 @@ test("First Name input has proper HTML attributes", () => {
   );
   const input = screen.getByLabelText(/first name/i);
   expect(input).toHaveAttribute("type", "text");
-  expect(input).toHaveAttribute("id", "First Name");
+  expect(input).toHaveAttribute("id", "first-name");
 });
 
 test("Last Name input has proper HTML attributes", () => {
@@ -199,7 +198,7 @@ test("Last Name input has proper HTML attributes", () => {
   );
   const input = screen.getByLabelText(/last name/i);
   expect(input).toHaveAttribute("type", "text");
-  expect(input).toHaveAttribute("id", "Last Name");
+  expect(input).toHaveAttribute("id", "last-name");
 });
 
 test("Email input has correct HTML attributes", () => {
@@ -214,7 +213,7 @@ test("Email input has correct HTML attributes", () => {
   );
   const input = screen.getByLabelText(/e-mail/i);
   expect(input).toHaveAttribute("type", "email");
-  expect(input).toHaveAttribute("id", "Email");
+  expect(input).toHaveAttribute("id", "e-mail");
 });
 
 test("Phone input has correct HTML attributes", () => {
@@ -229,7 +228,7 @@ test("Phone input has correct HTML attributes", () => {
   );
   const input = screen.getByLabelText(/phone/i);
   expect(input).toHaveAttribute("type", "tel");
-  expect(input).toHaveAttribute("id", "Phone");
+  expect(input).toHaveAttribute("id", "phone");
 });
 
 
@@ -259,7 +258,7 @@ test("Card number input has correct HTML attributes", () => {
   );
   const card = screen.getByLabelText(/card number/i);
   expect(card).toHaveAttribute("type", "text");
-  expect(card).toHaveAttribute("id", "Card Number");
+  expect(card).toHaveAttribute("id", "card-number");
 });
 
 test("CVC input has correct HTML attributes", () => {

@@ -8,9 +8,9 @@ import Twitt from '../assets/twitt.svg';
 export default function Footer() {
     return (
         <footer>
-            <img src={FootLogo} alt="Logo" className="Foot-logo"/>
+            <img src={FootLogo} alt="" role="presentation" className="Foot-logo"/>
             <div className="footer-text">
-                <nav>
+                <nav aria-label="Footer navigation">
                     <ul>
                         <li className="footer-cat">Site</li>
                         <li><Link to="/">Home</Link></li>
@@ -33,10 +33,10 @@ export default function Footer() {
                 <div className="social">
                     <ul>
                         <li className="footer-cat">Socials</li>
-                        <li><a href="www.instagram.com"><img src={Insta} alt="Instagram" />Instagram</a></li>
-                        <li><a href="www.facebook.com"><img src={Faceb} alt="Facebook" />Facebook</a></li>
-                        <li><a href="www.tiktok.com"><img src={Tiktk} alt="TikTok" />TikTok</a></li>
-                        <li><a href="www.twitter.com"><img src={Twitt} alt="Twitter" />Twitter</a></li>
+                        <li><a href="https://www.instagram.com"><img src={Insta} alt="Instagram" />Instagram</a></li>
+                        <li><a href="https://www.facebook.com"><img src={Faceb} alt="Facebook" />Facebook</a></li>
+                        <li><a href="https://www.tiktok.com"><img src={Tiktk} alt="TikTok" />TikTok</a></li>
+                        <li><a href="https://www.twitter.com"><img src={Twitt} alt="Twitter" />Twitter</a></li>
                     </ul>
                 </div>
             </div>

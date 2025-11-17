@@ -8,33 +8,35 @@ export default function BookingForm({ form, submitForm, availableTimes, dispatch
         <>
             <div className="reservation-form">
                 <form onSubmit={handleSubmit(submitForm)}>
-                    <h4 id="diningExpHeading">Dining Experience:</h4>
-                    <div className="dining-options">
-                        <label className="option-card">
-                            <input
-                                type="radio"
-                                value="Indoor"
-                                {...register("dining")}
-                            />
-                            <div className="option-content">
-                                <img src={IndoorImg} alt="Indoor" className="dining-img" />
-                            </div>
-                            <span>Indoor</span>
-                        </label>
+                    <fieldset className="dining-type">
+                        <legend><h4 id="diningExpHeading">Dining Experience:</h4></legend>
+                        <div className="dining-options">
+                            <label className="option-card" aria-label="Indoor Dining" >
+                                <input
+                                    type="radio"
+                                    value="Indoor"
+                                    {...register("dining")}
+                                />
+                                <div className="option-content">
+                                    <img src={IndoorImg} alt="Dine Indoors" className="dining-img" />
+                                </div>
+                                <span>Indoor</span>
+                            </label>
 
-                        <label className="option-card">
-                            <input
-                                type="radio"
-                                value="Alfresco"
-                                {...register("dining")}
-                            />
-                            <div className="option-content">
-                                <img src={AlfrescoImg} alt="Alfresco" className="dining-img" />
-                            </div>
-                            <span>Alfresco</span>
-                        </label>
-                    </div>
-                    <p className="error">{errors.dining?.message}</p>
+                            <label className="option-card" aria-label="Alfresco Dining" >
+                                <input
+                                    type="radio"
+                                    value="Alfresco"
+                                    {...register("dining")}
+                                />
+                                <div className="option-content">
+                                    <img src={AlfrescoImg} alt="Dine Alfresco" className="dining-img" />
+                                </div>
+                                <span>Alfresco</span>
+                            </label>
+                        </div>
+                    </fieldset>
+                    <p className="error" role="alert" aria-live="assertive">{errors.dining?.message}</p>
 
                     <h4>Booking Details:</h4>
                     <div className="selectors">
@@ -69,9 +71,9 @@ export default function BookingForm({ form, submitForm, availableTimes, dispatch
                             ))}
                         </select>
                     </div>
-                    <p className="error">{errors.people?.message}</p>
-                    <p className="error">{errors.date?.message}</p>
-                    <p className="error">{errors.time?.message}</p>
+                    <p className="error" role="alert" aria-live="assertive">{errors.people?.message}</p>
+                    <p className="error" role="alert" aria-live="assertive">{errors.date?.message}</p>
+                    <p className="error" role="alert" aria-live="assertive">{errors.time?.message}</p>
                     <p className="minornote">Note: For parties larger than 10 please call our friendly staff to discuss a reservation.</p>
                     <h4>Occasion:</h4>
                     <div className="selectors">
@@ -82,58 +84,59 @@ export default function BookingForm({ form, submitForm, availableTimes, dispatch
                         </select>
                     </div>
 
+                    <fieldset className="book-as-fieldset">
+                    <legend><h4>Book as:</h4></legend>
+                        <div className="book-as">
+                            <label className="option-card small" aria-label="Guest" >
+                                <input type="radio" value="Guest" {...register("bookingType")} />
+                                <div className="option-content"><span>Guest</span></div>
+                            </label>
 
-                    <h4>Book as:</h4>
-                    <div className="book-as">
-                    <label className="option-card small">
-                        <input type="radio" value="Guest" {...register("bookingType")} />
-                        <div className="option-content"><span>Guest</span></div>
-                    </label>
-
-                    <label className="option-card small">
-                        <input type="radio" value="Existing Patron" {...register("bookingType")} />
-                        <div className="option-content"><span>Existing Patron</span></div>
-                    </label>
-                </div>
+                            <label className="option-card small" aria-label="Existing Patron" >
+                                <input type="radio" value="Existing Patron" {...register("bookingType")} />
+                                <div className="option-content"><span>Existing Patron</span></div>
+                            </label>
+                        </div>
+                    </fieldset>
 
                     <div className="input-group">
-                    <label htmlFor="First Name">First Name<span className="required">*</span></label>
-                    <input id="First Name" type="text" {...register("firstName")} />
-                    <p className="error">{errors.firstName?.message}</p>
+                        <label htmlFor="first-name">First Name<span className="required">*</span></label>
+                        <input id="first-name" type="text" {...register("firstName")} />
+                        <p className="error" role="alert" aria-live="assertive">{errors.firstName?.message}</p>
                     </div>
 
                     <div className="input-group">
-                    <label htmlFor="Last Name">Last Name<span className="required">*</span></label>
-                    <input id="Last Name" type="text" {...register("lastName")} />
-                    <p className="error">{errors.lastName?.message}</p>
+                        <label htmlFor="last-name">Last Name<span className="required">*</span></label>
+                        <input id="last-name" type="text" {...register("lastName")} />
+                        <p className="error" role="alert" aria-live="assertive">{errors.lastName?.message}</p>
                     </div>
 
                     <div className="input-group">
-                    <label htmlFor="Email">E-Mail<span className="required">*</span></label>
-                    <input id="Email" type="email" {...register("email")} />
-                    <p className="error">{errors.email?.message}</p>
+                        <label htmlFor="e-mail">E-Mail<span className="required">*</span></label>
+                        <input id="e-mail" type="email" {...register("email")} />
+                        <p className="error" role="alert" aria-live="assertive">{errors.email?.message}</p>
                     </div>
 
                     <div className="input-group">
-                    <label htmlFor="Phone">Phone<span className="required">*</span></label>
-                    <input id="Phone" type="tel" {...register("phone")} />
-                    <p className="error">{errors.phone?.message}</p>
+                        <label htmlFor="phone">Phone<span className="required">*</span></label>
+                        <input id="phone" type="tel" {...register("phone")} />
+                        <p className="error" role="alert" aria-live="assertive">{errors.phone?.message}</p>
                     </div>
 
                     <div className="payment">
                     <div className="input-group">
-                        <label htmlFor="Card Number">Card Number<span className="required">*</span></label>
-                        <input id="Card Number" type="text" placeholder="1234-5678-9123-4567" {...register("card")} />
-                        <p className="error">{errors.card?.message}</p>
+                        <label htmlFor="card-number">Card Number<span className="required">*</span></label>
+                        <input id="card-number" type="text" placeholder="1234-5678-9123-4567" {...register("card")} />
+                        <p className="error" role="alert" aria-live="assertive">{errors.card?.message}</p>
                     </div>
                     <div className="input-group small">
                         <label htmlFor="CVC">CVC<span className="required">*</span></label>
                         <input id="CVC" type="text" placeholder="123" {...register("cvc")} />
-                        <p className="error">{errors.cvc?.message}</p>
+                        <p className="error" role="alert" aria-live="assertive">{errors.cvc?.message}</p>
                     </div>
                     </div>
 
-                    <div className="buttons"><button type="submit" className="button">Make Reservation</button></div>
+                    <div className="buttons"><button type="submit" aria-label="Make Reservation" className="button">Make Reservation</button></div>
                 </form>
             </div>
         </>

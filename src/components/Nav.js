@@ -5,11 +5,11 @@ export default function Nav() {
     const [open, setOpen] = useState(false);
 
     return (
-        <nav>
+        <nav aria-label="Main navigation">
             <div className="menu-toggle" onClick={() => setOpen(!open)}>
-                <div className={`nav-burger ${open ? "open" : ""}`} alt="menu"></div>
+                <div className={`nav-burger ${open ? "open" : ""}`} aria-expanded={open} aria-controls="primary-menu" aria-label="Toggle navigation menu" alt="menu"></div>
             </div>
-            <div className={open ? "menu open" : "menu"}>
+            <div id="primary-menu" className={open ? "menu open" : "menu"}>
                 <ul>
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/ourstory">About</Link></li>

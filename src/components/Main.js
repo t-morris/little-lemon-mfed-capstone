@@ -105,7 +105,7 @@ export default function Main() {
     };
 
     return (
-        <main>
+        <main id="main-content">
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/ourstory" element={<OurStory />} />

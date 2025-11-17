@@ -4,7 +4,8 @@ import WideLogo from '../assets/littlelemon_logo.png';
 export default function Header() {
     return (
         <header>
-            <img src={WideLogo} alt="Logo" className="App-logo"/>
+            {/* <a href="#main-content" className="skip-link">Skip to content</a> */}
+            <img src={WideLogo} alt="Little Lemon restaurant logo" className="App-logo"/>
             <Nav />
         </header>
     )

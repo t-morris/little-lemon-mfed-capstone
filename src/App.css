@@ -957,10 +957,20 @@ button:active {
 
 /* Bookings */
 
+fieldset {
+  border: none;
+  text-align: center;
+}
+
 .option-card {
   position: relative;
   display: inline-block;
   cursor: pointer;
+}
+
+.option-card input:focus-visible + .option-content {
+    outline: 3px solid #495E57;
+    outline-offset: 4px;
 }
 
 .option-card input[type="radio"] {
