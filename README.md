@@ -143,12 +143,12 @@ Dev Environment
 ## 🧭 Navigation Overview
 Routing is handled in Main.js using React Router:
 
-/ – Home
-/ourstory – About Us
-/menu – Menu
-/bookings – Bookings / Reservation Form
-/delivery – Online Ordering
-/login – Login
+- / – Home
+- /ourstory – About Us
+- /menu – Menu
+- /bookings – Bookings / Reservation Form
+- /delivery – Online Ordering
+- /login – Login
 
 The Footer contains additional semantic navigation with Site links, Contact details, and Social icons.
 
