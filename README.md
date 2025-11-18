@@ -1,70 +1,168 @@
-# Getting Started with Create React App
+# 🍋 Little Lemon Restaurant – Frontend Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A fully-functional React single-page application built as part of the Meta Front-End Development course.
+This project includes a responsive website, interactive reservation system, form validation, routing, and a full Jest test suite using React Testing Library.
 
-## Available Scripts
+## 📌 Features
 
-In the project directory, you can run:
+### ⭐ Core Pages
 
-### `npm start`
+- Home, About/Our Story, Menu, Reservations, Order Online, Login
+- Global header and footer with accessible navigation
+- Responsive layout with Flexbox and CSS Grid
+### 🍽 Reservation System
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Built with React Hook Form
+- Validation with Yup (@hookform/resolvers/yup)
+- Dynamic available times populated via a mocked API (fetchAPI)
+- Visual radio-based selectors for:
+- Dining type (Indoor / Alfresco)
+- Fully accessible labels, roles, ARIA attributes
+- Error feedback rendered with aria-live="assertive"
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 🧪 Unit Tests (Jest + React Testing Library)
 
-### `npm test`
+- Form attribute tests
+- Validation error tests
+- Successful submission test
+- Utils tests for initializeTimes and updateTimes
+- Mocked API with deterministic seeded random function
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🚀 Getting Started
+### 1. Clone the Repository
+```
+git clone https://github.com/<your-username>/<your-repo>.git
+cd <your-repo>
+```
 
-### `npm run build`
+### 2. Install Dependencies
+This project uses Node and npm.
+```
+npm install
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 3. Run the Development Server
+```
+npm start
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Browse to http://localhost:3000/ to view the app.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🧪 Running Tests
+This project uses Jest, React Testing Library, and @testing-library/user-event.
 
-### `npm run eject`
+### Run the entire test suite:
+```
+npm run test
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+###What the tests cover:
+- Component Rendering
+  - BookingForm UI and interactive elements
+  - HTML Attribute Assertions
+  - Inputs, radios, selects, ids, types
+- Validation
+  - Required fields
+  - Invalid email format
+  - Incorrect phone patterns
+  - Card number & CVC patterns
+- API Logic
+  - initializeTimes (ensures non-empty result)
+  - updateTimes (returns a new array)
+- Successful Submission
+  - Filling out all fields
+  - Radio/select interaction
+  - Ensures submitForm is called exactly once
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 📁 Project Structure
+```
+.
+├── package.json
+├── package-lock.json
+├── public
+│   ├── api.js
+│   ├── favicon.ico
+│   ├── index.html
+│   ├── little-lemon-og.png
+│   ├── manifest.json
+│   └── robots.txt
+├── README.md
+└── src
+    ├── App.css
+    ├── App.js
+    ├── App.test.js
+    ├── assets
+    │   ├── 08c5772c481233a30a46aeca552132053604e2a8.jpg
+    │   ├── 3ca412176fe4306326b04a78b51fa148c49f99c1.jpg
+    │   ├── 44dd2beb0c06094368ffbb7fa1843005cfdae174.jpg
+    │   ├── 8fab66317d6c35dc211a165dbc3735e15466ae68.png
+    │   └── ...
+    ├── components
+    │   ├── About.js
+    │   ├── BookingForm.js
+    │   ├── BookingPage.js
+    │   ├── ConfirmedBooking.js
+    │   ├── Delivery.js
+    │   ├── Footer.js
+    │   ├── Header.js
+    │   ├── Hero.js
+    │   ├── Home.js
+    │   ├── Main.js
+    │   ├── menuData.js
+    │   ├── Menu.js
+    │   ├── Nav.js
+    │   ├── NotFound.js
+    │   ├── OurStory.js
+    │   ├── Specials.js
+    │   ├── testimonialsData.js
+    │   ├── Testimonials.js
+    │   └── Utils.js
+    ├── index.css
+    ├── index.js
+    ├── reportWebVitals.js
+    └── setupTests.js
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## ⚙️ Tools & Libraries
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Frontend
+- React 18
+- React Router
+- React Hook Form
+- Yup for schema validation
+- CSS (custom styling)
 
-## Learn More
+Testing
+- Jest
+- @testing-library/react
+- @testing-library/user-event
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Dev Environment
+- Node.js + npm
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 🧭 Navigation Overview
+Routing is handled in Main.js using React Router:
 
-### Code Splitting
+/ – Home
+/ourstory – About Us
+/menu – Menu
+/bookings – Bookings / Reservation Form
+/delivery – Online Ordering
+/login – Login
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+The Footer contains additional semantic navigation with Site links, Contact details, and Social icons.
 
-### Analyzing the Bundle Size
+## 🔒 Form Validation Summary
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+The booking form uses a Yup schema enforcing:
+- Dining type (required)
+- People count (required)
+- Date + Time (required, auto-selected)
+- Booking type (required)
+- First/Last Name (required)
+- Email (valid + required)
+- Phone (10+ digits)
+- Card number (16–19 digits/spaces/hyphens)
+- CVC (3–4 digits)
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Real-time error display ensures accessibility and usability.
