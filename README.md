@@ -3,6 +3,8 @@
 A fully-functional React single-page application built as part of the Meta Front-End Development course.
 This project includes a responsive website, interactive reservation system, form validation, routing, and a full Jest test suite using React Testing Library.
 
+### [Site Demo](https://littlelemon.tmorris.me/)
+
 ## 📌 Features
 
 ### ⭐ Core Pages
