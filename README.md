@@ -31,8 +31,8 @@ This project includes a responsive website, interactive reservation system, form
 ## 🚀 Getting Started
 ### 1. Clone the Repository
 ```
-git clone https://github.com/<your-username>/<your-repo>.git
-cd <your-repo>
+git clone https://github.com/t-morris/little-lemon-mfed-capstone.git
+cd little-lemon-mfed-capstone
 ```
 
 ### 2. Install Dependencies
