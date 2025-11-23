@@ -7,6 +7,7 @@ import OurStory from "./OurStory.js";
 import Menu from './Menu.js';
 import Delivery from './Delivery.js';
 import NotFound from './NotFound.js';
+import UnderConstruction from './UnderConstruction.js';
 import ConfirmedBooking from "./ConfirmedBooking.js";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -122,7 +123,7 @@ export default function Main() {
                         />
                     }
                 />
-                <Route path="/delivery" element={<Delivery />} />
+                <Route path="/delivery" element={<UnderConstruction />} />
                 <Route path="*" element={<NotFound />} />
                 <Route path="/confirmation" element={<ConfirmedBooking bookingData={bookingData} />} />
             </Routes>
