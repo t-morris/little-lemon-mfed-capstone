@@ -5,7 +5,7 @@ import Home from './Home.js';
 import BookingPage from './BookingPage.js';
 import OurStory from "./OurStory.js";
 import Menu from './Menu.js';
-import Delivery from './Delivery.js';
+// import Delivery from './Delivery.js';
 import NotFound from './NotFound.js';
 import UnderConstruction from './UnderConstruction.js';
 import ConfirmedBooking from "./ConfirmedBooking.js";
